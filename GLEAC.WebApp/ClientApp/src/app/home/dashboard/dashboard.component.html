@@ -1,0 +1,95 @@
+<div class="row">
+  <div class="col-md-12">
+    <nb-card>
+      <nb-card-header>Calculate Levenshtein Distance</nb-card-header>
+      <nb-card-body>
+
+        <form [formGroup]="ldForm" (ngSubmit)="getLevenshteinDistance()" class="form-horizontal">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="lable-align label col-sm-3 form-control-label">String1</label>
+                <div class="col-sm-9">
+                  <input nbInput
+                         fullWidth
+                         formControlName="String1"
+                         name="String1"
+                         id="input-string1"
+                         placeholder="String1"
+                         fieldSize="large"
+                         autofocus
+                         [status]="f.String1.dirty ? (f.String1.invalid  ? 'danger' : 'success') : 'basic'"
+                         [required]="true"
+                         [attr.aria-invalid]="f.String1.invalid && f.String1.touched ? true : null">
+                  <ng-container *ngIf="f.String1.invalid && f.String1.touched">
+                    <p class="caption status-danger" *ngIf="f.String1.errors?.required">
+                      String1 is required!
+                    </p>
+                  </ng-container>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="lable-align label col-sm-3 form-control-label">String2</label>
+                <div class="col-sm-9">
+                  <input nbInput
+                         fullWidth
+                         formControlName="String2"
+                         name="String2"
+                         id="input-string2"
+                         placeholder="String2"
+                         fieldSize="large"
+                         autofocus
+                         [status]="f.String2.dirty ? (f.String2.invalid  ? 'danger' : 'success') : 'basic'"
+                         [required]="true"
+                         [attr.aria-invalid]="f.String2.invalid && f.String2.touched ? true : null">
+                  <ng-container *ngIf="f.String2.invalid && f.String2.touched">
+                    <p class="caption status-danger" *ngIf="f.String2.errors?.required">
+                      String2 is required!
+                    </p>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <br />
+
+          <div class="row" *ngIf="levenshteinDistanceResponse">
+            <div class="col-md-8">
+              <div class="form-group row">
+                <label class="result-font-size label col-md-5 form-control-label">Levenshtein Distance : {{levenshteinDistanceResponse.distance}}</label>
+              </div>
+            </div>
+          </div>
+
+          <br />
+
+          <div class="row" *ngIf="levenshteinDistanceResponse">
+            <div class="col-md-8">
+              <table style="font-weight: 600" class="resultTable table table-bordered">
+                <tr scope="row" *ngFor="let row of levenshteinDistanceResponse.resultMatrix;">
+                  <td class="td-centre-align" *ngFor="let field of row">
+                    {{field}}
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="offset-md-6 col-md-6">
+              <div class="buttons-row float-right">
+                <button (click)="clearForm()" type="button" nbButton status="danger">Clear</button> &nbsp;&nbsp;
+                <button nbSpinnerStatus="info" [nbSpinner]="loading"
+                        [disabled]="submitted || !ldForm.valid" type="submit" nbButton status="success">
+                  Submit
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

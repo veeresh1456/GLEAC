@@ -1,0 +1,61 @@
+<h1 id="title" class="title">Login</h1>
+<p class="sub-title">Hello! Log in with your username.</p>
+
+<form (ngSubmit)="login()" [formGroup]="loginForm" aria-labelledby="title">
+
+  <div class="form-control-group">
+
+    <label class="label" for="input-username">Username:</label>
+    <input nbInput
+           fullWidth
+           formControlName="Username"
+           name="Username"
+           id="input-username"
+           placeholder="Username"
+           fieldSize="large"
+           autofocus
+           [status]="lf.Username.dirty ? (lf.Username.invalid  ? 'danger' : 'success') : 'basic'"
+           [required]="true"
+           [attr.aria-invalid]="lf.Username.invalid && lf.Username.touched ? true : null">
+    <ng-container *ngIf="lf.Username.invalid && lf.Username.touched">
+      <p class="caption status-danger" *ngIf="lf.Username.errors?.required">
+        Username is required!
+      </p>
+    </ng-container>
+  </div>
+
+  <div class="form-control-group">
+    <span class="label-with-link">
+      <label class="label" for="input-password">Password:</label>
+    </span>
+    <input nbInput
+           fullWidth
+           formControlName="Password"
+           name="Password"
+           type="password"
+           id="input-password"
+           placeholder="Password"
+           fieldSize="large"
+           [status]="lf.Password.dirty ? (lf.Password.invalid  ? 'danger' : 'success') : 'basic'"
+           [required]="true"
+           [minlength]="6"
+           [maxlength]="20"
+           [attr.aria-invalid]="lf.Password.invalid && lf.Password.touched ? true : null">
+    <ng-container *ngIf="lf.Password.invalid && lf.Password.touched ">
+      <p class="caption status-danger" *ngIf="lf.Password.errors?.required">
+        Password is required!
+      </p>
+    </ng-container>
+  </div>
+
+  <button nbButton
+          fullWidth
+          status="primary"
+          size="large"
+          nbSpinnerStatus="info"
+          [nbSpinner]="loading"
+          [disabled]="submitted || !loginForm.valid"
+          [class.btn-pulse]="submitted">
+    Log In
+  </button>
+</form>

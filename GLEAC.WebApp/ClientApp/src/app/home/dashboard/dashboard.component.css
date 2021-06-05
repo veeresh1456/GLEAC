@@ -1,0 +1,25 @@
+
+
+.resultTable tr:first-child {
+  background-color: gray;
+}
+
+.resultTable tr td:first-child {
+  background: gray;
+}
+
+.td-centre-align {
+  text-align: center
+}
+
+.resultTable tr:last-child td:last-child {
+  background: lightskyblue;
+}
+
+.lable-align {
+  margin-top: 17px;
+}
+
+.result-font-size {
+  font-size: 20px;
+}
