@@ -49,16 +49,10 @@ export class DashboardComponent implements OnInit {
 
     this.levenshteinDistanceRequest = this.ldForm.value;
 
-    let cachekey = (this.levenshteinDistanceRequest.String1 + "-$-" + this.levenshteinDistanceRequest.String2).toUpperCase();
-    let cachedResponse = localStorage.getItem(cachekey);
-
-    if (cachedResponse) {
-      this.levenshteinDistanceResponse = JSON.parse(cachedResponse);
-      this.cd.detectChanges();
+    // Check in cache
+    if (this.checkIfResultExistsInCache())
       return;
-    }
 
-   
     this.submitted = true;
     this.loading = true;
 
@@ -70,7 +64,8 @@ export class DashboardComponent implements OnInit {
         next: (data) => {
           this.levenshteinDistanceResponse = data;
 
-          localStorage.setItem(cachekey, JSON.stringify(this.levenshteinDistanceResponse));
+          // save to cache
+          localStorage.setItem(this.getCacheKey(), JSON.stringify(this.levenshteinDistanceResponse));
 
           this.loading = false;
           this.submitted = false;
@@ -86,7 +81,23 @@ export class DashboardComponent implements OnInit {
 
   clearForm() {
     this.ldForm.reset();
+    this.levenshteinDistanceResponse = {};
     this.cd.detectChanges();
+  }
+
+  getCacheKey() {
+    return (this.levenshteinDistanceRequest.String1 + "-$-" + this.levenshteinDistanceRequest.String2).toUpperCase();
+  }
+
+  checkIfResultExistsInCache() {
+    let cachekey = this.getCacheKey();
+    let cachedResponse = localStorage.getItem(cachekey);
+    if (cachedResponse) {
+      this.levenshteinDistanceResponse = JSON.parse(cachedResponse);
+      this.cd.detectChanges();
+      return true;
+    }
+    return false;
   }
 
   ngOnInit(): void {

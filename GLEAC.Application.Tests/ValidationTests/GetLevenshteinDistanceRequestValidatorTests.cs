@@ -39,5 +39,30 @@ namespace GLEAC.Application.UnitTests.ValidationTests
 
             result.ShouldHaveValidationErrorFor(cur => cur.String2);
         }
+
+
+        [Fact]
+        public void ShouldThrowErrorWhenString1ContainsSpecialChars()
+        {
+            var getLevenshteinDistanceRequest = new GetLevenshteinDistanceRequest();
+            getLevenshteinDistanceRequest.String1 = "veeresh$";
+            getLevenshteinDistanceRequest.String2 = "veeresh";
+
+            var result = _validator.TestValidate(getLevenshteinDistanceRequest);
+
+            result.ShouldHaveValidationErrorFor(cur => cur.String1);
+        }
+
+        [Fact]
+        public void ShouldThrowErrorWhenString2ContainsSpecialChars()
+        {
+            var getLevenshteinDistanceRequest = new GetLevenshteinDistanceRequest();
+            getLevenshteinDistanceRequest.String1 = "veeresh";
+            getLevenshteinDistanceRequest.String2 = "veeresh$";
+
+            var result = _validator.TestValidate(getLevenshteinDistanceRequest);
+
+            result.ShouldHaveValidationErrorFor(cur => cur.String2);
+        }
     }
 }

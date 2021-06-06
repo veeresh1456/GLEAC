@@ -18,12 +18,16 @@
                          placeholder="String1"
                          fieldSize="large"
                          autofocus
+                         pattern="^[a-zA-Z0-9]+$"
                          [status]="f.String1.dirty ? (f.String1.invalid  ? 'danger' : 'success') : 'basic'"
                          [required]="true"
                          [attr.aria-invalid]="f.String1.invalid && f.String1.touched ? true : null">
                   <ng-container *ngIf="f.String1.invalid && f.String1.touched">
                     <p class="caption status-danger" *ngIf="f.String1.errors?.required">
                       String1 is required!
+                    </p>
+                    <p class="caption status-danger" *ngIf="f.String1.errors?.pattern">
+                      String1 should not contain special characters!
                     </p>
                   </ng-container>
                 </div>
@@ -39,12 +43,16 @@
                          placeholder="String2"
                          fieldSize="large"
                          autofocus
+                         pattern="^[a-zA-Z0-9]+$"
                          [status]="f.String2.dirty ? (f.String2.invalid  ? 'danger' : 'success') : 'basic'"
                          [required]="true"
                          [attr.aria-invalid]="f.String2.invalid && f.String2.touched ? true : null">
                   <ng-container *ngIf="f.String2.invalid && f.String2.touched">
                     <p class="caption status-danger" *ngIf="f.String2.errors?.required">
                       String2 is required!
+                    </p>
+                    <p class="caption status-danger" *ngIf="f.String2.errors?.pattern">
+                      String2 should not contain special characters!
                     </p>
                   </ng-container>
                 </div>
@@ -64,7 +72,7 @@
 
           <br />
 
-          <div class="row" *ngIf="levenshteinDistanceResponse">
+          <div class="row" *ngIf="levenshteinDistanceResponse.resultMatrix">
             <div class="col-md-8">
               <table style="font-weight: 600" class="resultTable table table-bordered">
                 <tr scope="row" *ngFor="let row of levenshteinDistanceResponse.resultMatrix;">

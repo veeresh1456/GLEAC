@@ -54,8 +54,8 @@ namespace GLEAC.HttpApi
             services.AddMemoryCache();
 
             services.AddSingleton<ILevenshteinDistanceService, LevenshteinDistanceService>();
-            services.AddTransient<IAuthenticationService, AuthenticationService>();
-            services.AddTransient<ITokenService, TokenService>();
+            services.AddSingleton<IAuthenticationService, AuthenticationService>();
+            services.AddSingleton<ITokenService, TokenService>();
 
             services.AddSwaggerGen(s =>
             {
